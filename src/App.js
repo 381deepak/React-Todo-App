@@ -6,7 +6,7 @@ import List from "./List";
 import Alert from "./Alert";
 import { useGlobalContext } from "./context";
 import Colors from "./Colors";
-//import DarkModeToggle from './DarkModeToggle';
+import DarkModeToggle from './DarkModeToggle';
 
 const App = () => {
   const {
@@ -34,7 +34,7 @@ const App = () => {
     } else if (name && isEditing) {
       setTasks(
         tasks.map((task) => {
-          return task.id === editId ? { ...task, name: name } : task;
+          return task.id === editId ? {task, name: name } : task;
         })
       );
       setIsEditing(false);
@@ -68,9 +68,9 @@ const App = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [inputRef, tasks]);
 
-  const handleDragEnd = (param) => {
-    const srcI = param.source.index;
-    const desI = param.destination?.index;
+  const handleDragEnd = (e) => {
+    const srcI = e.source.index;
+    const desI = e.destination?.index;
     if (desI) {
       const reOrdered = [...tasks];
       reOrdered.splice(desI, 0, reOrdered.splice(srcI, 1)[0]);
@@ -138,8 +138,8 @@ const App = () => {
           Clear All
         </button>
       )}
-	  {/* <DarkModeToggle/>
-	   */}
+	  <DarkModeToggle/>
+	  
     </div>
 	<div class="footer">
 		<a href='https://github.com/381deepak' target='_blank' rel="noopener noreferrer"><FaGithub className='github'/></a>
